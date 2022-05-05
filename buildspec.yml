@@ -12,7 +12,7 @@ phases:
       - IMAGE_TAG=${COMMIT_HASH:=latest}
       - ECR_REPOSITORY_URI=$REPOSITORY_URI/${REPO}
       - DOCKER_U=matteb2
-      - DOCKER_P=$(aws --profile personal ssm get-parameter --region us-east-1 --name "docker-auth" --with-decryption --output text --query Parameter.Value)
+      - DOCKER_P=$(aws ssm get-parameter --region us-east-1 --name "docker-auth" --with-decryption --output text --query Parameter.Value)
   build:
     commands:
       - echo Build started on `date`
