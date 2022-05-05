@@ -73,6 +73,8 @@ Resources:
                   - logs:CreateLogStream
                   - logs:PutLogEvents
                   - ecr:GetAuthorizationToken
+                  - ssm:GetParameter
+                  - kms:Decrypt
         - PolicyName: ecr
           PolicyDocument:
             Version: 2012-10-17
