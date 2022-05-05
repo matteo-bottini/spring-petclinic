@@ -11,10 +11,13 @@ phases:
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
       - ECR_REPOSITORY_URI=$REPOSITORY_URI/${REPO}
+      - DOCKER_U=matteb2
+      - DOCKER_P=$(aws --profile personal ssm get-parameter --region us-east-1 --name "docker-auth" --with-decryption --output text --query Parameter.Value)
   build:
     commands:
       - echo Build started on `date`
       - mvn package
+      - echo $DOCKER_P | docker login -u $DOCKER_U --password-stdin
       - docker build . -t $ECR_REPOSITORY_URI:latest
       - docker tag $ECR_REPOSITORY_URI:latest $ECR_REPOSITORY_URI:$IMAGE_TAG
       - echo Build completed on `date`

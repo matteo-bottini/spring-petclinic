@@ -179,6 +179,8 @@ Resources:
             - iam:CreateInstanceProfile
             - iam:PassRole
             - iam:CreateServiceLinkedRole
+            - ssm:GetParameters
+            - kms:Decrypt
             Effect: Allow
             Resource: "*"
           - Action:
